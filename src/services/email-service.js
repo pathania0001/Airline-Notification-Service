@@ -1,15 +1,17 @@
-const {TicketRepository} = require('../repositories');
 const { MAILER } = require('../config');
+const mailsender = require('../config/email-config');
+const {TicketRepository} = require('../repositories');
 
 const ticketRepo = new TicketRepository();
 
 async function sendEmail(mailFrom, mailTo, subject, text) {
     try {
-        const response = await MAILER.sendMail({
+        console.log("reached",mailFrom,mailTo,subject,text)
+        const response = await mailsender.sendMail({
             from: mailFrom,
             to: mailTo,
-            subject: subject,
-            text: text
+            subject,
+            text
         });
         return response;
     } catch(error) {
